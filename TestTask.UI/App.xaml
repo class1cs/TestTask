@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:TestTask.UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <local:ViewModelLocator x:Key="ViewModelLocator"></local:ViewModelLocator>
     </Application.Resources>
 </Application>
