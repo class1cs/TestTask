@@ -1,4 +1,4 @@
-﻿using TestTask.DAL;
+﻿using TestTask.DAL.Models;
 
 namespace TestTask.BL.Helpers;
 

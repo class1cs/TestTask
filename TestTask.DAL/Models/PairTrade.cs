@@ -1,4 +1,4 @@
-﻿namespace TestTask.DAL;
+﻿namespace TestTask.DAL.Models;
 
 public class PairTrade : Trade
 {

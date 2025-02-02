@@ -16,6 +16,7 @@ public static class IoC
         services.AddTransient<MainViewModel>();
         services.AddScoped<IRestParser, RestParser>();
         services.AddScoped<IWebSocketParser, WebSocketParser>();
+        services.AddScoped<IWalletConverter, WalletConverter>();
         _provider = services.BuildServiceProvider();
     }
 

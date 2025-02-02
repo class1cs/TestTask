@@ -21,13 +21,15 @@
                   EnableRowVirtualization="True"
                   HeadersVisibility="Column"
                   IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding  ConvertedBalances}"
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="2*" Header="BTC"/>
-                <DataGridTextColumn Width="2*" Header="USDT"/>
-                <DataGridTextColumn Width="2*" Header="XPR"/>
-                <DataGridTextColumn Width="2*" Header="XMR"/>
-                <DataGridTextColumn Width="2*" Header="DASH"/>
+                <DataGridTextColumn Binding="{Binding TotalInBtc}" Width="2*" Header="BTC"/>
+                <DataGridTextColumn Binding="{Binding TotalInUsdt}" Width="2*" Header="USDT"/>
+                <DataGridTextColumn Binding="{Binding TotalInXrp}" Width="2*" Header="XRP"/>
+                <DataGridTextColumn Binding="{Binding TotalInXmr}" Width="2*" Header="XMR"/>
+                <DataGridTextColumn Binding="{Binding TotalInDash}" Width="2*" Header="DASH"/>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" Grid.Row="1">

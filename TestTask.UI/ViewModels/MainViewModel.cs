@@ -1,22 +1,38 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.Native;
 using PropertyChanged;
 using TestTask.BL.Interfaces;
+using TestTask.DAL.Models;
 
 namespace TestTask.UI.ViewModels;
 
 public class MainViewModel : BindableBase
 {
     private readonly IRestParser _restParser;
+    
     private readonly IWebSocketParser _webSocketParser;
 
-    public MainViewModel(IRestParser restParser, IWebSocketParser webSocketParser)
+    public ObservableCollection<ConvertedBalance> ConvertedBalances { get; set; } 
+    
+    public MainViewModel(IRestParser restParser, IWebSocketParser webSocketParser, IWalletConverter walletConverter)
     {
         _restParser = restParser;
         _webSocketParser = webSocketParser;
+        var wallet = new Wallet
+        {
+            Btc = 1,
+            Xrp = 15000,
+            Xmr = 50,
+            Dash = 30
+        };
+
+        var convertedBalance = walletConverter.ConvertWalletToBalances(wallet);
+
+        ConvertedBalances = new ObservableCollection<ConvertedBalance> { convertedBalance };
     }
 
     public ICommand GetTradesCommand => new DelegateCommand(async () =>

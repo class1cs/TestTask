@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using TestTask.BL.Helpers;
 using TestTask.BL.Interfaces;
-using TestTask.DAL;
+using TestTask.DAL.Models;
 
 namespace TestTask.BL.Services;
 

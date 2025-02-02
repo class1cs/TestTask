@@ -1,4 +1,4 @@
-﻿namespace TestTask.DAL;
+﻿namespace TestTask.DAL.Models;
 
 public abstract class Trade
 {

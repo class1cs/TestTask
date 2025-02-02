@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestTask.DAL
+namespace TestTask.DAL.Models
 {
     public class Candle
     {
