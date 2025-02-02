@@ -8,6 +8,33 @@
         DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DataGrid CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="False"
+                  CanUserResizeRows="False"
+                  CanUserSortColumns="False"
+                  EnableRowVirtualization="True"
+                  HeadersVisibility="Column"
+                  IsReadOnly="True"
+                  SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="BTC"/>
+                <DataGridTextColumn Width="2*" Header="USDT"/>
+                <DataGridTextColumn Width="2*" Header="XPR"/>
+                <DataGridTextColumn Width="2*" Header="XMR"/>
+                <DataGridTextColumn Width="2*" Header="DASH"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button Command="{Binding SubscribeAtTradesAndCandlesCommand}" Margin="5" Content="Подписаться на торги/свечи"/>
+            <Button Command="{Binding UnsubscribeFromCandlesCommand}" Margin="5" Content="Отписаться от торгов/свечей"/>
+            <Button Command="{Binding GetCandlesCommand}" Margin="5" Content="Получить свечи"/>
+            <Button Command="{Binding GetTradesCommand}" Margin="5" Content="Получить торги"/>
+        </StackPanel>
     </Grid>
 </Window>

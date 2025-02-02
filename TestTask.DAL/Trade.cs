@@ -15,5 +15,5 @@ public abstract class Trade
     /// <summary>
     /// Id трейда
     /// </summary>
-    public int Id { get; set; }
+    public long Id { get; set; }
 }

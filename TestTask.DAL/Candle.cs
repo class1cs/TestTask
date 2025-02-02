@@ -9,45 +9,35 @@ namespace TestTask.DAL
     public class Candle
     {
         /// <summary>
-        /// Валютная пара
-        /// </summary>
-        public string Pair { get; set; }
-
-        /// <summary>
         /// Цена открытия
         /// </summary>
-        public decimal OpenPrice { get; set; }
+        public long OpenPrice { get; set; }
 
         /// <summary>
         /// Максимальная цена
         /// </summary>
-        public decimal HighPrice { get; set; }
+        public long HighPrice { get; set; }
 
         /// <summary>
         /// Минимальная цена
         /// </summary>
-        public decimal LowPrice { get; set; }
+        public long LowPrice { get; set; }
 
         /// <summary>
         /// Цена закрытия
         /// </summary>
-        public decimal ClosePrice { get; set; }
+        public long ClosePrice { get; set; }
 
 
         /// <summary>
-        /// Partial (Общая сумма сделок)
+        /// Количество валюты, торгующейся за определённый период времени (frametime).
         /// </summary>
-        public decimal TotalPrice { get; set; }
-
+        public decimal Volume { get; set; }
+        
         /// <summary>
-        /// Partial (Общий объем)
+        /// Миллисекундная отметка
         /// </summary>
-        public decimal TotalVolume { get; set; }
-
-        /// <summary>
-        /// Время
-        /// </summary>
-        public DateTimeOffset OpenTime { get; set; }
+        public long Mts { get; set; }
 
     }
 }

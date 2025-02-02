@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
+using TestTask.BL.Helpers;
 using TestTask.BL.Interfaces;
 using TestTask.DAL;
 
@@ -15,39 +17,37 @@ public class RestParser : IRestParser
     
     public async Task<IEnumerable<Trade>> GetNewTradesAsync(string symbol, int maxCount)
     {
-       var request = await _httpClient.GetAsync($"https://api-pub.bitfinex.com/v2/trades/{symbol}/hist?limit={maxCount}");
-       var json = await request.Content.ReadAsStringAsync();
-       var deserializedResponse = JsonConvert.DeserializeObject<List<List<object>>>(json);
-       var trade = deserializedResponse.FirstOrDefault();
-       if (trade.Count == 5)
-       {
-           var fundingTrades = deserializedResponse.Select(x => new FundingTrade()
-           {
-               Amount = Convert.ToDecimal(x[2]),
-               Id = Convert.ToInt32(x[0]),
-               Mts = Convert.ToInt32(x[1]),
-               Period = Convert.ToInt32(x[4]),
-               Rate = Convert.ToInt32(x[3]),
-               Side = Convert.ToDecimal(x[2]) > 0 ? "Buy" : "Sell"
-               // API не предоставляет данных о времени торгов валютами.
-           });
-           return fundingTrades;
-       }
-       
-       var pairTrades = deserializedResponse.Select(x => new PairTrade()
-       {
-           Amount = Convert.ToDecimal(x[2]),
-           Pair = symbol,
-           Id = Convert.ToInt32(x[0]),
-           Price = Convert.ToDecimal(x[3]),
-           Side = Convert.ToDecimal(x[2]) > 0 ? "Buy" : "Sell"
-          // API не предоставляет данных о времени торгов парами.
-       });
-       return pairTrades;
+        var queryParams = new Dictionary<string, string>()
+        {
+            ["limit"] = maxCount.ToString()
+        };
+        var uri = QueryHelpers.AddQueryString($"https://api-pub.bitfinex.com/v2/trades/{symbol}/hist", queryParams!);
+        
+        var response = await _httpClient.GetAsync(uri);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync();
+        var deserializedResponse = JsonConvert.DeserializeObject<List<List<object>>>(json);
+
+        return ResponseRestMapper.MapTrades(deserializedResponse, symbol);
     }
 
-    public Task<IEnumerable<Candle>> GetCandleSeriesAsync(string pair, int periodInSec, DateTimeOffset? from, long? count, DateTimeOffset? to = null)
+    public async Task<IEnumerable<Candle>> GetCandleSeriesAsync(string symbol, int count, string section)
     {
-        throw new NotImplementedException();
+        var queryParams = new Dictionary<string, string>()
+        {
+            ["limit"] = count.ToString()
+        };
+        var uri = QueryHelpers.AddQueryString($"https://api-pub.bitfinex.com/v2/candles/{symbol}/{section}", queryParams!);
+        
+        var response = await _httpClient.GetAsync(uri);
+        response.EnsureSuccessStatusCode();
+
+        var json = await response.Content.ReadAsStringAsync();
+        var deserializedResponse = JsonConvert.DeserializeObject<List<List<object>>>(json);
+
+        return ResponseRestMapper.MapCandles(deserializedResponse, symbol);
     }
+
+ 
 }

@@ -6,5 +6,5 @@ public interface IRestParser
 {
     Task<IEnumerable<Trade>> GetNewTradesAsync(string symbol, int maxCount);
     
-    Task<IEnumerable<Candle>> GetCandleSeriesAsync(string symbol, int periodInSec, DateTimeOffset? from,  long? count = 0, DateTimeOffset? to = null);
+    Task<IEnumerable<Candle>> GetCandleSeriesAsync(string symbol, int limit, string section);
 }
